@@ -1,36 +1,32 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL;
+import AdminHome from "./AdminPages/AdminHome/adminHome";
+import AdminProducts from "./AdminPages/AdminProducts/adminProducts";
+import AdminUsers from "./AdminPages/AdminUsers/adminUsers";
+import AdminReviews from "./AdminPages/AdminReviews/adminReviews";
 
-interface User {
-  id: string;
-  email: string;
-}
+import Home from "./Pages/Home/home";
+import SignUpPage from "./Pages/Auth/signUp";
+import SignIn from "./Pages/Auth/singIn";
 
 
 function App() {
 
-  const [user, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    fetch(`${backendUrl}/users`).then((response) => {
-      response.json().then((data) => {
-        setUsers(data);
-      });
-    });
-  }, []);
-
   return (
-    <div>
-      <h1>Users</h1>
-      <ul>
-      {user.map((user) => (
-        <li key={user.id}>
-          <div>{user.email}</div>
-        </li>
-      ))}
-      </ul>
-    </div>
+    <Router>
+      <Routes>
+        {/* Admin routes */}
+        <Route path="/admin" element={<AdminHome/>}/>
+        <Route path="/admin/addproduct" element={<AdminProducts/>}/>
+        <Route path="/admin/users" element={<AdminUsers/>}/>
+        <Route path="/admin/reviews" element={<AdminReviews/>}/>
+
+        {/* Users routes */}
+        <Route path="/" element={<Home/>}/>
+        <Route path="/auth/signup" element={<SignUpPage/>}/>
+        <Route path="/auth/signin" element={<SignIn/>}/>
+      </Routes>
+    </Router>
   );
 }
 // - Project structure:
