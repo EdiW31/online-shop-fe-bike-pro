@@ -8,6 +8,9 @@ import AdminReviews from "./AdminPages/AdminReviews/adminReviews";
 import Home from "./Pages/Home/home";
 import SignUpPage from "./Pages/Auth/signUp";
 import SignIn from "./Pages/Auth/singIn";
+import AdminRoute from "./EndPoints/adminRoutes";
+import Unauthorized from "./Pages/Unauthorized/unauthorized";
+import Products from "./Pages/ProductList/products";
 
 
 function App() {
@@ -16,15 +19,19 @@ function App() {
     <Router>
       <Routes>
         {/* Admin routes */}
-        <Route path="/admin" element={<AdminHome/>}/>
-        <Route path="/admin/addproduct" element={<AdminProducts/>}/>
-        <Route path="/admin/users" element={<AdminUsers/>}/>
-        <Route path="/admin/reviews" element={<AdminReviews/>}/>
+        <Route element={<AdminRoute/>}>
+          <Route path="/admin" element={<AdminHome/>}/>
+          <Route path="/admin/addproduct" element={<AdminProducts/>}/>
+          <Route path="/admin/users" element={<AdminUsers/>}/>
+          <Route path="/admin/reviews" element={<AdminReviews/>}/>
+        </Route>
 
         {/* Users routes */}
         <Route path="/" element={<Home/>}/>
         <Route path="/auth/signup" element={<SignUpPage/>}/>
         <Route path="/auth/signin" element={<SignIn/>}/>
+        <Route path="/unouthorized" element={<Unauthorized/>}/>
+        <Route path="/products" element={<Products/>}/>
       </Routes>
     </Router>
   );

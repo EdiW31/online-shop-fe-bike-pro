@@ -32,6 +32,7 @@ export const SignIn = async(email: string, password: string) => {
     try {
         const response = await axiosInstance.post("/auth/signin", UserSignIn);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         return response.data;
 
     } catch (error) {
@@ -43,6 +44,7 @@ export const Logout = async() => {
     try {
         const response = await axiosInstance.get("/auth/logout");
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         return response.data;
     } catch (error) {
         console.error(error);

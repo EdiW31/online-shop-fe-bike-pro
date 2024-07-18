@@ -1,10 +1,4 @@
 import {
-    AdjustmentsHorizontalIcon,
-    ArrowTrendingUpIcon,
-    BoltIcon,
-    CursorArrowRaysIcon,
-    PencilIcon,
-    UserGroupIcon,
     UserIcon,
     XMarkIcon,
   } from "@heroicons/react/24/outline"
@@ -43,7 +37,7 @@ import {
           duration: 0.25,
           ease: "easeInOut",
         }}
-        className={`h-full flex flex-col gap-8 w-64 absolute bg-neutral-900 ml-0 ${
+        className={`h-full flex flex-col gap-8 w-64 absolute bg-neutral-900 ml-0 z-40 ${
           isOpen ? "left-64" : "left-20"
         } border-r border-neutral-800 p-5`}
       >

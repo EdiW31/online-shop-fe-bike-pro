@@ -13,7 +13,6 @@ const AdminHome = () => {
           <h1 className="text-4xl text-neutral-200">Admin Dashboard</h1>
           <AdminCards />
           <div className="w-full hidden lg:block">
-            <UsersDashboard />
           </div>
         </section>
       </main>

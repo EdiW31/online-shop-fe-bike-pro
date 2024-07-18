@@ -1,23 +1,53 @@
 import React from 'react'
+import { useState, useEffect} from 'react'       
+import { getUsers, deleteUsers } from '../../EndPoints/Users/users.endpoints'
 
-const UsersDashboard = () => {
-  return (
+
+interface User {
+    name: string;
+    email: string;
+    role: string;
+    createdAt: string;
+    id: string;
+}
+
+export const UsersDashboard = () => {
+
+    const [users, setUsers] = useState<User[]>([]);
+
+    const fetchUsers = async () => {
+        const res = await getUsers();
+        setUsers(res.data);
+    }
+    
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    // Assuming deleteUsers function exists and requires a userId as an argument
+
+// Step 1: Modify the handleDelete function
+    const handleDelete = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        // Extract the user id from the button's dataset or another attribute
+        const userId = event.currentTarget.getAttribute('data-userid');
+        
+        if (userId) {
+            await deleteUsers(userId);
+            await fetchUsers();
+        }
+    };    
+
+return (
     <div>
         <div className="">
         <div className="flex items-center justify-between pb-6">
             <div>
-            <h2 className="font-semibold text-gray-700">User Accounts</h2>
-            <span className="text-xs text-gray-500">View accounts of registered users</span>
+            <h2 className="font-semibold text-gray-700 text-2xl">All the informations are here:</h2>
+            <span className="text-xs text-gray-500">View accounts of registered users and edit or delete them.</span>
             </div>
             <div className="flex items-center justify-between">
             <div className="ml-10 space-x-8 lg:ml-40">
-                <button className="flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white focus:outline-none focus:ring hover:bg-blue-700">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-4 w-4">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
-                </svg>
-
-                CSV
-                </button>
+                
             </div>
             </div>
         </div>
@@ -27,96 +57,49 @@ const UsersDashboard = () => {
                 <thead>
                 <tr className="bg-blue-600 text-left text-xs font-semibold uppercase tracking-widest text-white">
                     <th className="px-5 py-3">ID</th>
-                    <th className="px-5 py-3">Full Name</th>
-                    <th className="px-5 py-3">User Role</th>
+                    <th className="px-5 py-3">Name</th>
+                    <th className="px-5 py-3">Email</th>
                     <th className="px-5 py-3">Created at</th>
-                    <th className="px-5 py-3">Status</th>
+                    <th className="px-5 py-3">Role</th>
+                    <th className="px-5 py-3">Actions</th>
                 </tr>
                 </thead>
                 <tbody className="text-gray-500">
-                <tr>
+                {users.map((user) => (
+                    <tr>
                     <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <p className="whitespace-no-wrap">3</p>
+                    <p className="whitespace-no-wrap max-w-10">{user.id}</p>
                     </td>
                     <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                     <div className="flex items-center">
-                        <div className="h-10 w-10 flex-shrink-0">
-                        <img className="h-full w-full rounded-full" src="/images/-ytzjgg6lxK1ICPcNfXho.png" alt="" />
-                        </div>
                         <div className="ml-3">
-                        <p className="whitespace-no-wrap">Besique Monroe</p>
+                        <p className="whitespace-no-wrap">{user.name}</p>
                         </div>
                     </div>
                     </td>
                     <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <p className="whitespace-no-wrap">Administrator</p>
+                    <p className="whitespace-no-wrap">{user.email}</p>
                     </td>
                     <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <p className="whitespace-no-wrap">Sep 28, 2022</p>
+                    <p className="whitespace-no-wrap">{user.createdAt}</p>
                     </td>
 
                     <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <span className="rounded-full bg-green-200 px-3 py-1 text-xs font-semibold text-green-900">Active</span>
+                    {user.role === 'ADMIN' ? (
+                        <span className="bg-green-200 text-green-600 rounded-full px-3 py-1 text-xs font-semibold"> {user.role} </span>
+                    ) : (
+                    <span className="bg-blue-200 text-blue-600 rounded-full px-3 py-1 text-xs font-semibold"> {user.role} </span>
+                    )}
                     </td>
-                </tr>
-                <tr>
-                    <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <p className="whitespace-no-wrap">7</p>
-                    </td>
-                    <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <div className="flex items-center">
-                        <div className="h-10 w-10 flex-shrink-0">
-                        <img className="h-full w-full rounded-full" src="/images/ddHJYlQqOzyOKm4CSCY8o.png" alt="" />
-                        </div>
-                        <div className="ml-3">
-                        <p className="whitespace-no-wrap">James Cavier</p>
-                        </div>
-                    </div>
-                    </td>
-                    <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <p className="whitespace-no-wrap">Author</p>
-                    </td>
-                    <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <p className="whitespace-no-wrap">Sep 28, 2022</p>
+                    <td className='border-b border-gray-50 bg-white px-5 py-5 text-sm'>
+                        <button className='text-sm mr-2 bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline'>Edit</button>
+                        <button onClick={handleDelete} data-userid={user.id} className='text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline'>Delete</button>
                     </td>
 
-                    <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <span className="rounded-full bg-green-200 px-3 py-1 text-xs font-semibold text-green-900">Active</span>
-                    </td>
                 </tr>
-                <tr>
-                    <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <p className="whitespace-no-wrap">12</p>
-                    </td>
-                    <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <div className="flex items-center">
-                        <div className="h-10 w-10 flex-shrink-0">
-                        <img className="h-full w-full rounded-full" src="/images/oPf2b7fqx5xa3mo68dYHo.png" alt="" />
-                        </div>
-                        <div className="ml-3">
-                        <p className="whitespace-no-wrap">Elvis Son</p>
-                        </div>
-                    </div>
-                    </td>
-                    <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <p className="whitespace-no-wrap">Editor</p>
-                    </td>
-                    <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <p className="whitespace-no-wrap">Sep 28, 2022</p>
-                    </td>
-
-                    <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                    <span className="rounded-full bg-yellow-200 px-3 py-1 text-xs font-semibold text-yellow-900">Suspended</span>
-                    </td>
-                </tr>
+                ))}
                 </tbody>
             </table>
-            </div>
-            <div className="flex flex-col items-center border-t bg-white px-5 py-5 sm:flex-row sm:justify-between">
-            <span className="text-xs text-gray-600 sm:text-sm"> Showing 1 to 5 of 12 Entries </span>
-            <div className="mt-2 inline-flex sm:mt-0">
-                <button className="mr-10 p-3 rounded-md border text-sm font-semibold text-gray-600 transition duration-150 hover:bg-gray-100">See all</button>
-            </div>
             </div>
         </div>
         </div>

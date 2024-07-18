@@ -33,7 +33,7 @@ const SignUpPage = () => {
                 <div className="flex items-center p-6 h-full w-full">
                     <form className="max-w-lg w-full mx-auto" onSubmit={(e) => e.preventDefault()}>
                         <div className="mb-12">
-                            <h3 className="text-blue-500 md:text-3xl text-2xl font-extrabold max-md:text-center">Create an account</h3>
+                            <h3 className="text-blue-500 md:text-3xl text-2xl font-extrabold max-md:text-center">Create an account for Bike Pro.</h3>
                         </div>
 
                         <div>

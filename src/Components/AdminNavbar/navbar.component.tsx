@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import NavigationLink from "./navigationLink"
 import ProjectLink from "./projectLink"
 import ProjectNavigation from "./projectNavigation"
+import { Logout } from "../../EndPoints/Authentication/auth.endpoints"
 
 const containerVariants = {
   close: {
@@ -21,6 +22,12 @@ const containerVariants = {
       duration: 0.5,
     },
   },
+}
+
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  window.location.href = "/auth/signin";
 }
 
 const svgVariants = {
@@ -60,7 +67,7 @@ const AdminNavbar = () => {
         variants={containerVariants}
         animate={containerControls}
         initial="close"
-        className="bg-neutral-900 flex flex-col z-10 gap-20 p-5 absolute top-0 left-0 h-full shadow shadow-neutral-600"
+        className="bg-neutral-900 flex flex-col z-40 gap-20 p-5 fixed top-0 left-0 h-full shadow shadow-neutral-600"
       >
         <div className="flex flex-row w-full justify-between place-items-center">
           <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-700 rounded-full" />
@@ -117,10 +124,18 @@ const AdminNavbar = () => {
             </svg>
           </NavigationLink>
 
-          <NavigationLink name="Disconnect" path='#'>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="stroke-inherit stroke-[0.75] min-w-8 w-8">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-            </svg>
+          <button onClick={handleLogout}>
+            <NavigationLink name="Disconnect" path='#'>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="stroke-inherit stroke-[0.75] min-w-8 w-8">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+              </svg>
+            </NavigationLink>
+          </button>
+
+          <NavigationLink name="Client Website" path="/">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="stroke-inherit stroke-[0.75] min-w-8 w-8">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+          </svg>
           </NavigationLink>
 
         </div>

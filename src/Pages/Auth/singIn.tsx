@@ -3,42 +3,47 @@ import { useNavigate } from 'react-router-dom';
 import { SignIn } from '../../EndPoints/Authentication/auth.endpoints'; // Assuming SignIn function is defined in authService
 
 const SignInPage = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const navigate = useNavigate();
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const navigate = useNavigate();
 
-  const handleSignIn = () => {
-    SignIn(email, password).then((res) => {
-      if (res) {
-        navigate("/");
-      } else {
-        setErrorMessage("Invalid email or password");
-      }
-    }).catch((error) => {
-      const errorMessage = error.message || "An error occurred!";
-      setErrorMessage(errorMessage);
-    });
-  };
+    const handleSignIn = () => {
 
-  return (
+        SignIn(email, password).then((res) => {
+            // luam userul din local storage si verificam daca are rolul de admin
+            const userString = localStorage.getItem("user");
+            const user = userString ? JSON.parse(userString) : null;
+            const role = user ? user.role : null;
+            console.log(role);
+        if (res) {
+            if(role === "ADMIN"){
+                navigate("/admin");
+            }else{
+                navigate("/");
+            }
+        } else {
+            setErrorMessage("Invalid email or password");
+        }
+        }).catch((error) => {
+        const errorMessage = error.message || "An error occurred!";
+            setErrorMessage(errorMessage);
+        });
+
+    };
+
+    return (
     <div>
-      <div className="font-[sans-serif] bg-white md:h-screen">
-      <div className="grid md:grid-cols-2 items-center gap-8 h-full">
-        <div className="max-md:order-1 p-4">
-          <img src="https://readymadeui.com/signin-image.webp" className="lg:max-w-[85%] w-full h-full object-contain block mx-auto" alt="login-image" />
-        </div>
+        <div className="font-[sans-serif] bg-white md:h-screen">
+            <div className="grid md:grid-cols-2 items-center gap-8 h-full">
+            <div className="max-md:order-1 p-4">
+                <img src="https://readymadeui.com/signin-image.webp" className="lg:max-w-[85%] w-full h-full object-contain block mx-auto" alt="login-image" />
+            </div>
 
         <div className="flex items-center md:p-8 p-6 bg-[#0C172C] h-full lg:w-11/12 lg:ml-auto">
           <form className="max-w-lg w-full mx-auto">
             <div className="mb-12">
-              <h3 className="text-3xl font-bold text-yellow-400">Sign In into your account!</h3>
-            </div>
-
-            <div>
-              <label className="text-white text-xs block mb-2">Full Name</label>
-              <div className="relative flex items-center">
-              </div>
+              <h3 className="text-3xl font-bold text-yellow-400">Sign In into your Bike Pro. account!</h3>
             </div>
             <div className="mt-8">
               <label className="text-white text-xs block mb-2">Email</label>
@@ -78,17 +83,24 @@ const SignInPage = () => {
                 {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             </div>
 
+            <div className='mt-4 text-white text-sm'>
+              <a href='/auth/signup'>If you have no account please <span className='text-orange-300'>Sign up!</span></a>
+            </div>
+
             <div className="mt-12">
               <button type="button" className="w-max shadow-xl py-3 px-6 text-sm text-gray-800 font-semibold rounded-md bg-transparent bg-yellow-400 hover:bg-yellow-500 focus:outline-none" onClick={handleSignIn}>
                 Sign In!
               </button>
+              <button type="button" className="w-max shadow-xl py-3 px-6 text-sm text-gray-300 font-medium ml-4 rounded-md bg-transparent bg-green-800 hover:bg-green-500 focus:outline-none">
+                <a href='/'>Take me home!</a>
+              </button>
             </div>
           </form>
         </div>
-      </div>
+            </div>
     </div>
     </div>
-  );
+    );
 };
 
 export default SignInPage;

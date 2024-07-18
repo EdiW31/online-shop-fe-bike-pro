@@ -33,7 +33,7 @@ export const createProduct = async (name: string, categoryId: number, descriptio
     }
     
     try{
-        const createdProduct = await axiosInstance.post("/products", newProduct);
+        const createdProduct = await axiosInstance.post("/products/create", newProduct);
         return createdProduct.data;
     }
     catch(error){
@@ -66,3 +66,15 @@ export const deleteProduct = async (id: number) => {
     }
 }
 
+export const addPhoto = async (id: number, photo: File) => {
+    const formData = new FormData();
+    formData.append("id", id.toString());
+    formData.append("photo", photo);
+
+    try {
+        const response = await axiosInstance.post(`/upload`, formData);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
