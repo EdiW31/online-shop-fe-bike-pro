@@ -23,17 +23,25 @@ const AdminUsers = () => {
   }, []);
 
   const handleInputChange = (userId: string, field: string, value: string) => {
-    setUsers(users.map(user => user.id === userId ? { ...user, [field]: value } : user));
+    setUsers(
+      users.map(user =>
+        user.id === userId ? { ...user, [field]: value } : user,
+      ),
+    );
   };
 
   const handleSave = async (userId: string) => {
     const user = users.find(user => user.id === userId);
     if (user) {
       try {
-        const updateData = { name: user.name, email: user.email, role: user.role };
+        const updateData = {
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        };
         await updateUsers(user.id, updateData);
-        console.log(user.id)
-        console.log(user)
+        console.log(user.id);
+        console.log(user);
         console.log('User updated successfully');
       } catch (error) {
         console.error('Failed to update user:', error);
@@ -43,13 +51,15 @@ const AdminUsers = () => {
 
   return (
     <div>
-      <div className="sticky top-0 left-0">
+      <div className='sticky top-0 left-0'>
         <AdminNavbar />
       </div>
-      <section className="flex flex-col p-10 ml-20 gap-5">
-        <h1 className="text-4xl text-neutral-400">Users Dashboard, edit, delete, create!</h1>
-        <div className="bg-teal-600 p-1 rounded-full" />
-        <div className="w-full lg:block">
+      <section className='flex flex-col p-10 ml-20 gap-5'>
+        <h1 className='text-4xl text-neutral-400'>
+          Users Dashboard, edit, delete, create!
+        </h1>
+        <div className='bg-teal-600 p-1 rounded-full' />
+        <div className='w-full lg:block'>
           <UsersDashboard />
           {/* <table className="w-full text-md bg-white shadow-md rounded mb-4">
             <tbody>

@@ -8,7 +8,7 @@ const isAdmin = () => {
 };
 
 const AdminRoute = () => {
-  return isAdmin() ? <Outlet /> : <Navigate to="/unouthorized" />;
+  return isAdmin() ? <Outlet /> : <Navigate to='/unouthorized' />;
 };
 
 export default AdminRoute;
