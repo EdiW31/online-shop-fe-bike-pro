@@ -73,7 +73,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     };
     fetchFavorites();
   }, []);
-
+  
 
   return (
     <div>

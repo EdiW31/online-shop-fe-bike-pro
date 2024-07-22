@@ -5,7 +5,7 @@ import Navbar from '../../Components/UserNavbar/userNavbar.component';
 import Footer from '../../Components/Footer/footer.component';
 import { getProductById } from '../../EndPoints/Products/products.endpoints';
 import { addFavorite, getFavorites, removeFavorite } from '../../EndPoints/Favorites/favorites.endpoint';
-import { parse } from 'path';
+import { createOrder } from '../../EndPoints/Order/order.endpoints';
 
 interface Product {
     name: string;
@@ -26,6 +26,12 @@ type Favorites = {
     id: number;
 };
 
+interface Order {
+    productId: number;
+    quantity: number;
+    totalPrice: number;
+}
+
 const ProductPage = () => {
 
     const [product, setProduct] = useState<Product | null>(null);
@@ -33,6 +39,25 @@ const ProductPage = () => {
 
     const {id} = useParams();
     const productId = parseInt(id) ?? 0;
+
+    const handleAddToCart = async () => {
+      try {
+        const order = {
+          productId: productId,
+          quantity: 1,
+          totalPrice: product?.price ?? 0
+        };
+      
+        const user = localStorage.getItem('user');
+        const userJson = user ? JSON.parse(user) : null;
+
+        const response = await createOrder(order, userJson.id, productId);
+        console.log(response);
+      } catch (error) {
+        console.error("Failed to add to cart:", error);
+        // Handle the error appropriately in the UI
+      }
+    };
 
     const handleAddFavorite = async (productid:number) => {
         window.location.reload();
@@ -111,7 +136,7 @@ const ProductPage = () => {
         </div>
         <div className="flex">
           <span className="title-font font-medium text-2xl text-gray-900">${product?.price}</span>
-          <button className="mr-4 flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Button</button>
+          <button onClick={handleAddToCart} className="mr-4 flex ml-auto text-white bg-slate-700 border-0 py-2 px-6 focus:outline-none hover:bg-slate-600 rounded">Add to Cart</button>
           {favorites.some((favorite) => favorite.productId === parseInt(id)) ? (
     <button
       onClick={() => handleDeleteFavorite(parseInt(id))}

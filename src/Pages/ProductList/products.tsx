@@ -142,7 +142,7 @@ export const Products = () => {
         </div>
       </div>
       
-      <div className='grid lg:grid-cols-3 grid-cols-1 justify-center gap-5 '>
+      <div className='grid lg:grid-cols-3 grid-cols-1 justify-center gap-5  '>
         {shownProducts && shownProducts.map(product => (
           <ProductCard
             key={product.id}
