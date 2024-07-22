@@ -48,6 +48,15 @@ export const createProduct = async (
   }
 };
 
+export const getProductsByCategory = async (categoryId: number) => {
+  try {
+    const response = await axiosInstance.get(`/products/categorie/${categoryId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export const updateProduct = async (
   id: number,
   name: string,

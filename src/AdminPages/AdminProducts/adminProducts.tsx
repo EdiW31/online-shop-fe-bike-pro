@@ -10,8 +10,14 @@ interface Product {
   categoryId: number;
   description?: string;
   price: number;
-  photos: string[];
+  photos: Photo[];
 }
+
+type Photo = {
+  id: number;
+  photoUrl: string;
+  productId: number;
+};
 
 const AdminProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);

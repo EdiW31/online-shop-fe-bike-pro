@@ -9,6 +9,13 @@ interface Product {
   name: string;
   categoryId: number;
   price: number;
+  photos: Photo[];
+}
+
+type Photo={
+  id:number;
+  photoUrl:string;
+  productId:number;
 }
 
 export const UserNavbar = () => {
@@ -18,7 +25,7 @@ export const UserNavbar = () => {
   //cart functions
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
-  const [orders, setOrders] = useState<any[]>([]);
+
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
@@ -137,17 +144,17 @@ export const UserNavbar = () => {
                 <div className='flex space-x-4'>
                   {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
                   <a
-                    href='#'
+                    href='/'
                     className='rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white'
                     aria-current='page'
                   >
-                    Products
+                    Home
                   </a>
                   <a
-                    href='#'
+                    href='/products'
                     className='rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white'
                   >
-                    Favorites
+                    Products
                   </a>
                   {(() => {
                     const user = localStorage.getItem('user');
@@ -282,7 +289,7 @@ export const UserNavbar = () => {
                                           <li className='flex py-6'>
                                             <div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
                                               <img
-                                                src='https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg'
+                                                src={`http://localhost:8000/${product?.photos.map(photo => photo.photoUrl).join(',')}`}
                                                 alt='Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.'
                                                 className='h-full w-full object-cover object-center'
                                               />

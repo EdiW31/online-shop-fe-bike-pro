@@ -11,6 +11,9 @@ import SignIn from './Pages/Auth/singIn';
 import AdminRoute from './EndPoints/adminRoutes';
 import Unauthorized from './Pages/Unauthorized/unauthorized';
 import Products from './Pages/ProductList/products';
+import ProductPage from './Pages/ProductDetails/productPage';
+
+import NotFound from './Pages/404/notFound';
 
 function App() {
   return (
@@ -30,36 +33,13 @@ function App() {
         <Route path='/auth/signin' element={<SignIn />} />
         <Route path='/unouthorized' element={<Unauthorized />} />
         <Route path='/products' element={<Products />} />
+        <Route path='/product/:id' element={<ProductPage />} />
+
+        {/* 404 page */}
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </Router>
   );
 }
-// - Project structure:
-//   - src/
-//     - components/ (Reusable UI components)
-//       - Navbar/
-//         - Navbar.tsx
-//         - navbar.css
-//       - Footer/
-//         - Footer.tsx
-//         - footer.css
-//       - ProductCard/
-//         - ProductCard.tsx
-//         - productCard.css
-//     - pages/ (Different pages of the application)
-//       - Home/
-//         - Home.tsx
-//         - home.css
-//       - ProductList/
-//         - ProductList.tsx
-//         - productList.css
-//       - ProductDetails/
-//         - ProductDetails.tsx
-//         - productDetails.css
-//       - Cart/
-//         - Cart.tsx
-//         - cart.css
-//       - Checkout/
-//         - Checkout.tsx
-//         - checkout.css
+
 export default App;

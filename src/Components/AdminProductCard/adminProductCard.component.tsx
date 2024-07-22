@@ -6,8 +6,14 @@ interface AdminProductCardProps {
   productKey: number;
   name: string;
   price: number;
-  photos: string[];
+  photos: Photo[];
 }
+
+type Photo = {
+  id: number;
+  photoUrl: string;
+  productId: number;
+};
 
 export const AdminProductCard: React.FC<AdminProductCardProps> = ({
   id,
@@ -30,7 +36,7 @@ export const AdminProductCard: React.FC<AdminProductCardProps> = ({
       <div className='bg-gray-100 rounded-2xl p-5 z-0 cursor-pointer hover:-translate-y-2 transition-all relative sm:max-w-80'>
         <div className='w-5/6 h-[210px] overflow-hidden mx-auto aspect-w-16 aspect-h-8 md:mb-2 mb-4'>
           <img
-            src={photos[0]}
+            src={`http://localhost:8000/${photos ? photos.map((photo: any) => photo.photoUrl): ''}`}
             alt='Product 1'
             className='h-full w-full object-contain'
           />
